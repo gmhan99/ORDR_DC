@@ -14,24 +14,6 @@ class RuleRoulettePage extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Icon(
-                FluentIcons.game,
-                size: 32,
-                color: Colors.blue,
-              ),
-              const SizedBox(width: 16),
-              Text(
-                locale.side_button_roulette_rule,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 32),
           Card(
             child: Padding(
               padding: const EdgeInsets.all(24.0),
@@ -50,7 +32,7 @@ class RuleRoulettePage extends ConsumerWidget {
                     '게임 규칙을 랜덤하게 선택하는 룰렛입니다.',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.grey[600],
+                      color: Colors.grey.withOpacity(0.7),
                     ),
                   ),
                   const SizedBox(height: 24),

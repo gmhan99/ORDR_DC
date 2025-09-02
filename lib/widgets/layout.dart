@@ -14,13 +14,9 @@ class Layout extends ConsumerWidget{
 
     return NavigationView(
       appBar: NavigationAppBar(
-        title: Text(locale.side_button_home),
-        leading: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(children: [
-            const Text('ORDR Season 2'),
-          ]),
-        ),
+        title: const Text(''),
+        leading: const SizedBox.shrink(),
+        height: 0,
       ),
       content: material.Material(
         color: Colors.transparent,

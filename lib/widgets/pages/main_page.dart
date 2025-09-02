@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ordr_dc/l10n/app_localizations.dart';
 import 'package:ordr_dc/widgets/layout.dart';
@@ -21,56 +22,118 @@ class _MainPageState extends ConsumerState<MainPage> {
     final selectedPage = ref.watch(selectedPageProvider);
 
     return Layout(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          // 좌측 사이드바
+          // ===== 상단 헤더 바 영역 =====
           Container(
-            width: 300,
+            height: 60,
             decoration: BoxDecoration(
-              color: Colors.grey[50],
+              color: Colors.white,
               border: Border(
-                right: BorderSide(
-                  color: Colors.grey[200],
+                bottom: BorderSide(
+                  color: Colors.grey.withOpacity(0.3),
                   width: 1,
                 ),
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Row(
                 children: [
-                  // 앱 제목
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 24.0),
-                    child: Row(
-                      children: [
-                        Icon(
-                          FluentIcons.playlist_music,
-                          size: 32,
-                          color: Colors.blue,
+                  // 좌측: 앱 로고
+                  Row(
+                    children: [
+                      Icon(
+                        FluentIcons.playlist_music,
+                        size: 24,
+                        color: Colors.blue,
+                      ),
+                      const SizedBox(width: 8),
+                      const Text(
+                        'ORDR DC',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
-                        const SizedBox(width: 12),
-                        const Text(
-                          'ORDR DC',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  // 네비게이션 버튼들
-                  const SideBar(),
+                  const Spacer(),
+                  // 중앙: 링크 버튼들
+                  Row(
+                    children: [
+                      _buildTopLinkButton(
+                        icon: FluentIcons.link,
+                        label: '공식 사이트',
+                        onPressed: () {
+                          // 공식 사이트 링크
+                          print('공식 사이트 클릭됨');
+                        },
+                      ),
+                      const SizedBox(width: 16),
+                      _buildTopLinkButton(
+                        icon: FluentIcons.document,
+                        label: '가이드',
+                        onPressed: () {
+                          // 가이드 링크
+                          print('가이드 클릭됨');
+                        },
+                      ),
+                      const SizedBox(width: 16),
+                      _buildTopLinkButton(
+                        icon: FluentIcons.people,
+                        label: '커뮤니티',
+                        onPressed: () {
+                          // 커뮤니티 링크
+                          print('커뮤니티 클릭됨');
+                        },
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  // 우측: 종료 버튼
+                  _buildExitButton(),
                 ],
               ),
             ),
           ),
-          // 메인 콘텐츠 영역
+          // ===== 하단 메인 영역 (좌측 사이드바 + 우측 콘텐츠) =====
           Expanded(
-            child: _buildPageContent(selectedPage),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // ===== 좌측 사이드바 영역 =====
+                Container(
+                  width: 300,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border(
+                      right: BorderSide(
+                        color: Colors.grey.withOpacity(0.3),
+                        width: 1,
+                      ),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // 네비게이션 메뉴 버튼들
+                        const SideBar(),
+                      ],
+                    ),
+                  ),
+                ),
+                // ===== 우측 메인 콘텐츠 영역 =====
+                Expanded(
+                  child: Container(
+                    color: Colors.white,
+                    child: _buildPageContent(selectedPage),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -100,24 +163,6 @@ class _MainPageState extends ConsumerState<MainPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Icon(
-                FluentIcons.home,
-                size: 32,
-                color: Colors.blue,
-              ),
-              const SizedBox(width: 16),
-              Text(
-                locale.side_button_home,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 32),
           // 환영 메시지 카드
           Card(
             child: Padding(
@@ -137,7 +182,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                     '좌측 메뉴에서 원하는 기능을 선택하여 사용하실 수 있습니다.',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.grey[600],
+                      color: Colors.grey,
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -211,11 +256,103 @@ class _MainPageState extends ConsumerState<MainPage> {
               description,
               style: TextStyle(
                 fontSize: 14,
-                color: Colors.grey[600],
+                color: Colors.grey.withOpacity(0.7),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildTopLinkButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback onPressed,
+  }) {
+    return Button(
+      onPressed: onPressed,
+      style: ButtonStyle(
+        backgroundColor: ButtonState.all(Colors.transparent),
+        padding: ButtonState.all(const EdgeInsets.symmetric(horizontal: 16, vertical: 8)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            size: 16,
+            color: Colors.grey.withOpacity(0.7),
+          ),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey.withOpacity(0.7),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildExitButton() {
+    return Button(
+      onPressed: () => _showExitDialog(),
+      style: ButtonStyle(
+        backgroundColor: ButtonState.all(Colors.transparent),
+        padding: ButtonState.all(const EdgeInsets.symmetric(horizontal: 12, vertical: 8)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            FluentIcons.cancel,
+            size: 16,
+            color: Colors.red.withOpacity(0.8),
+          ),
+          const SizedBox(width: 6),
+          Text(
+            '종료',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.red.withOpacity(0.8),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showExitDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => ContentDialog(
+        title: const Text('프로그램 종료'),
+        content: const Text('정말로 프로그램을 종료하시겠습니까?'),
+        actions: [
+          Button(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('취소'),
+          ),
+          Button(
+            onPressed: () {
+              Navigator.of(context).pop();
+              // 프로그램 종료
+              SystemNavigator.pop();
+            },
+            style: ButtonStyle(
+              backgroundColor: ButtonState.all(Colors.red),
+            ),
+            child: const Text(
+              '종료',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
       ),
     );
   }

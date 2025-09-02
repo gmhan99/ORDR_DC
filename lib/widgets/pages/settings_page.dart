@@ -15,24 +15,6 @@ class SettingsPage extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Icon(
-                FluentIcons.settings,
-                size: 32,
-                color: Colors.orange,
-              ),
-              const SizedBox(width: 16),
-              Text(
-                locale.side_button_settings,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 32),
           Card(
             child: Padding(
               padding: const EdgeInsets.all(24.0),
@@ -100,7 +82,7 @@ class SettingsPage extends ConsumerWidget {
             Icon(
               icon,
               size: 24,
-              color: Colors.grey[600],
+              color: Colors.grey.withOpacity(0.7),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -118,7 +100,7 @@ class SettingsPage extends ConsumerWidget {
                     subtitle,
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.grey[600],
+                      color: Colors.grey.withOpacity(0.7),
                     ),
                   ),
                 ],
@@ -127,7 +109,7 @@ class SettingsPage extends ConsumerWidget {
             Icon(
               FluentIcons.chevron_right,
               size: 16,
-              color: Colors.grey[400],
+              color: Colors.grey.withOpacity(0.5),
             ),
           ],
         ),

@@ -80,13 +80,13 @@ class SideBar extends ConsumerWidget {
             Icon(
               icon,
               size: 20,
-              color: isSelected ? Colors.blue : Colors.grey[600],
+              color: isSelected ? Colors.blue : Colors.grey.withOpacity(0.7),
             ),
             const SizedBox(width: 8),
             Text(
               title,
               style: TextStyle(
-                color: isSelected ? Colors.blue : Colors.grey[600],
+                color: isSelected ? Colors.blue : Colors.grey.withOpacity(0.7),
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
               ),
             ),

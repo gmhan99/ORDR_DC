@@ -7,7 +7,11 @@ import 'l10n/app_localizations.dart';
 import 'package:ordr_dc/widgets/pages/main_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -18,6 +22,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return FluentApp(
       title: 'ordr_dc',
+      debugShowCheckedModeBanner: false, // Debug Banner 제거
+      locale: const Locale('ko', ''), // 기본 로케일을 한국어로 설정
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
