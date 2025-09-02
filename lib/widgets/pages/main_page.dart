@@ -8,6 +8,8 @@ import 'package:ordr_dc/widgets/side_bar.dart';
 import 'package:ordr_dc/widgets/pages/rule_roulette_page.dart';
 import 'package:ordr_dc/widgets/pages/unit_roulette_page.dart';
 import 'package:ordr_dc/widgets/pages/settings_page.dart';
+import 'package:ordr_dc/config/urls.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
  
 
@@ -62,32 +64,23 @@ class _MainPageState extends ConsumerState<MainPage> {
                   // 중앙: 링크 버튼들
                   Row(
                     children: [
-                      _buildTopLinkButton(
-                        icon: FluentIcons.link,
-                        label: locale.top_link_official_site,
-                        onPressed: () {
-                          // 공식 사이트 링크
-                          print('공식 사이트 클릭됨');
-                        },
-                      ),
-                      const SizedBox(width: 16),
-                      _buildTopLinkButton(
-                        icon: FluentIcons.document,
-                        label: locale.top_link_guide,
-                        onPressed: () {
-                          // 가이드 링크
-                          print('가이드 클릭됨');
-                        },
-                      ),
-                      const SizedBox(width: 16),
-                      _buildTopLinkButton(
-                        icon: FluentIcons.people,
-                        label: locale.top_link_community,
-                        onPressed: () {
-                          // 커뮤니티 링크
-                          print('커뮤니티 클릭됨');
-                        },
-                      ),
+                                             _buildTopLinkButton(
+                         icon: FluentIcons.link,
+                         label: locale.top_link_official_site,
+                         onPressed: () => _openUrl(AppUrls.officialSite),
+                       ),
+                       const SizedBox(width: 16),
+                       _buildTopLinkButton(
+                         icon: FluentIcons.document,
+                         label: locale.top_link_guide,
+                         onPressed: () => _openUrl(AppUrls.guide),
+                       ),
+                       const SizedBox(width: 16),
+                       _buildTopLinkButton(
+                         icon: FluentIcons.git_graph,
+                         label: locale.top_link_community,
+                         onPressed: () => _openUrl(AppUrls.community),
+                       ),
                     ],
                   ),
                   const Spacer(),
@@ -468,6 +461,24 @@ class _MainPageState extends ConsumerState<MainPage> {
         ],
       ),
     );
+  }
+
+  // URL 열기 함수
+  Future<void> _openUrl(String url) async {
+    if (AppUrls.isValidUrl(url)) {
+      try {
+        final uri = Uri.parse(url);
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
+        } else {
+          print('URL을 열 수 없습니다: $url');
+        }
+      } catch (e) {
+        print('URL 열기 오류: $e');
+      }
+    } else {
+      print('유효하지 않은 URL: $url');
+    }
   }
 
   // 사이드바 토글 버튼

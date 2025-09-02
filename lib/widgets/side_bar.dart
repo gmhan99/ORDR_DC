@@ -29,7 +29,7 @@ class SideBar extends ConsumerWidget {
           isSelected: selectedPage == 'home',
           isCollapsed: isCollapsed,
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 8),
         _buildNavButton(
           context: context,
           ref: ref,
@@ -39,7 +39,7 @@ class SideBar extends ConsumerWidget {
           isSelected: selectedPage == 'rule_roulette',
           isCollapsed: isCollapsed,
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 8),
         _buildNavButton(
           context: context,
           ref: ref,

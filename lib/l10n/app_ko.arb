@@ -20,9 +20,9 @@
     "feature_settings_title": "설정",
     "feature_settings_description": "애플리케이션 설정 관리",
     
-    "top_link_official_site": "공식 사이트",
+    "top_link_official_site": "공식 디스코드",
     "top_link_guide": "가이드",
-    "top_link_community": "커뮤니티",
+    "top_link_community": "Github",
     "exit_button": "종료",
     
     "exit_dialog_title": "프로그램 종료",

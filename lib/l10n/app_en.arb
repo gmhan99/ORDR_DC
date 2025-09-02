@@ -20,9 +20,9 @@
     "feature_settings_title": "Settings",
     "feature_settings_description": "Manage application settings",
     
-    "top_link_official_site": "Official Site",
+    "top_link_official_site": "Official Discord",
     "top_link_guide": "Guide",
-    "top_link_community": "Community",
+    "top_link_community": "Github",
     "exit_button": "Exit",
     
     "exit_dialog_title": "Exit Program",
