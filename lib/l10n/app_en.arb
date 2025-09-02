@@ -1,0 +1,13 @@
+{
+    "@@locale" : "en",
+
+    "side": "Sidebar",
+    "@side" : {
+        "description" : "Text for Sidebar"
+    },
+    "side_button_home": "Home",
+    "side_button_roulette_rule": "Rule Roulette",
+    "side_button_roulette_unit": "Unit Roulette",
+    "side_button_settings": "Settings"
+    
+}

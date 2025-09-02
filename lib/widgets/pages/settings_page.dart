@@ -1,0 +1,137 @@
+import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ordr_dc/l10n/app_localizations.dart';
+import 'package:flutter/material.dart' as material;
+
+class SettingsPage extends ConsumerWidget {
+  const SettingsPage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locale = AppLocalizations.of(context);
+
+    return Padding(
+      padding: const EdgeInsets.all(32.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                FluentIcons.settings,
+                size: 32,
+                color: Colors.orange,
+              ),
+              const SizedBox(width: 16),
+              Text(
+                locale.side_button_settings,
+                style: const TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 32),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '애플리케이션 설정',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  _buildSettingItem(
+                    icon: FluentIcons.translate,
+                    title: '언어 설정',
+                    subtitle: '애플리케이션 언어를 변경합니다',
+                    onTap: () {
+                      // 언어 설정 기능 구현 예정
+                      print('언어 설정 클릭됨');
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  _buildSettingItem(
+                    icon: FluentIcons.color,
+                    title: '테마 설정',
+                    subtitle: '애플리케이션 테마를 변경합니다',
+                    onTap: () {
+                      // 테마 설정 기능 구현 예정
+                      print('테마 설정 클릭됨');
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  _buildSettingItem(
+                    icon: FluentIcons.info,
+                    title: '앱 정보',
+                    subtitle: '애플리케이션 정보를 확인합니다',
+                    onTap: () {
+                      // 앱 정보 표시
+                      print('앱 정보: ORDR DC Season 2 v1.0.0');
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSettingItem({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
+    return material.InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              size: 24,
+              color: Colors.grey[600],
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              FluentIcons.chevron_right,
+              size: 16,
+              color: Colors.grey[400],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

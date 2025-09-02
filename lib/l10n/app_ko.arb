@@ -1,0 +1,14 @@
+{
+    "@@locale" : "ko",
+
+    "side" : "사이드바",
+    "@side" : {
+        "description" : "사이드바 텍스트 모음"
+    },
+    "side_button_home": "홈으로",
+    "side_button_roulette_rule": "규칙 룰렛",
+    "side_button_roulette_unit": "기물 룰렛",
+    "side_button_settings": "설정"
+    
+
+}
