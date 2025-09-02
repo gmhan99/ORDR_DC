@@ -8,7 +8,41 @@
     "side_button_home": "홈으로",
     "side_button_roulette_rule": "규칙 룰렛",
     "side_button_roulette_unit": "기물 룰렛",
-    "side_button_settings": "설정"
+    "side_button_settings": "설정",
     
-
+    "app_title": "ORDR DC",
+    "welcome_title": "ORDR DC Season 2에 오신 것을 환영합니다!",
+    "welcome_description": "좌측 메뉴에서 원하는 기능을 선택하여 사용하실 수 있습니다.",
+    "feature_rule_roulette_title": "규칙 룰렛",
+    "feature_rule_roulette_description": "게임 규칙을 랜덤하게 선택",
+    "feature_unit_roulette_title": "기물 룰렛",
+    "feature_unit_roulette_description": "게임 기물을 랜덤하게 선택",
+    "feature_settings_title": "설정",
+    "feature_settings_description": "애플리케이션 설정 관리",
+    
+    "top_link_official_site": "공식 사이트",
+    "top_link_guide": "가이드",
+    "top_link_community": "커뮤니티",
+    "exit_button": "종료",
+    
+    "exit_dialog_title": "프로그램 종료",
+    "exit_dialog_content": "정말로 프로그램을 종료하시겠습니까?",
+    "exit_dialog_cancel": "취소",
+    "exit_dialog_confirm": "종료",
+    
+    "rule_roulette_title": "규칙 룰렛",
+    "rule_roulette_description": "게임 규칙을 랜덤하게 선택하는 룰렛입니다.",
+    "rule_roulette_button": "룰렛 돌리기",
+    
+    "unit_roulette_title": "기물 룰렛",
+    "unit_roulette_description": "게임 기물을 랜덤하게 선택하는 룰렛입니다.",
+    "unit_roulette_button": "룰렛 돌리기",
+    
+    "settings_title": "애플리케이션 설정",
+    "settings_language_title": "언어 설정",
+    "settings_language_subtitle": "애플리케이션 언어를 변경합니다",
+    "settings_theme_title": "테마 설정",
+    "settings_theme_subtitle": "애플리케이션 테마를 변경합니다",
+    "settings_info_title": "앱 정보",
+    "settings_info_subtitle": "애플리케이션 정보를 확인합니다"
 }

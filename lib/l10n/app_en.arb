@@ -8,6 +8,41 @@
     "side_button_home": "Home",
     "side_button_roulette_rule": "Rule Roulette",
     "side_button_roulette_unit": "Unit Roulette",
-    "side_button_settings": "Settings"
+    "side_button_settings": "Settings",
     
+    "app_title": "ORDR DC",
+    "welcome_title": "Welcome to ORDR DC Season 2!",
+    "welcome_description": "Select the desired function from the left menu to use it.",
+    "feature_rule_roulette_title": "Rule Roulette",
+    "feature_rule_roulette_description": "Randomly select game rules",
+    "feature_unit_roulette_title": "Unit Roulette",
+    "feature_unit_roulette_description": "Randomly select game units",
+    "feature_settings_title": "Settings",
+    "feature_settings_description": "Manage application settings",
+    
+    "top_link_official_site": "Official Site",
+    "top_link_guide": "Guide",
+    "top_link_community": "Community",
+    "exit_button": "Exit",
+    
+    "exit_dialog_title": "Exit Program",
+    "exit_dialog_content": "Are you sure you want to exit the program?",
+    "exit_dialog_cancel": "Cancel",
+    "exit_dialog_confirm": "Exit",
+    
+    "rule_roulette_title": "Rule Roulette",
+    "rule_roulette_description": "A roulette that randomly selects game rules.",
+    "rule_roulette_button": "Spin Roulette",
+    
+    "unit_roulette_title": "Unit Roulette",
+    "unit_roulette_description": "A roulette that randomly selects game units.",
+    "unit_roulette_button": "Spin Roulette",
+    
+    "settings_title": "Application Settings",
+    "settings_language_title": "Language Settings",
+    "settings_language_subtitle": "Change application language",
+    "settings_theme_title": "Theme Settings",
+    "settings_theme_subtitle": "Change application theme",
+    "settings_info_title": "App Info",
+    "settings_info_subtitle": "Check application information"
 }

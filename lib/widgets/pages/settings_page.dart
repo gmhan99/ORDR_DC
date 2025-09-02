@@ -22,7 +22,7 @@ class SettingsPage extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '애플리케이션 설정',
+                    locale.settings_title,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
@@ -31,8 +31,8 @@ class SettingsPage extends ConsumerWidget {
                   const SizedBox(height: 24),
                   _buildSettingItem(
                     icon: FluentIcons.translate,
-                    title: '언어 설정',
-                    subtitle: '애플리케이션 언어를 변경합니다',
+                    title: locale.settings_language_title,
+                    subtitle: locale.settings_language_subtitle,
                     onTap: () {
                       // 언어 설정 기능 구현 예정
                       print('언어 설정 클릭됨');
@@ -41,8 +41,8 @@ class SettingsPage extends ConsumerWidget {
                   const SizedBox(height: 16),
                   _buildSettingItem(
                     icon: FluentIcons.color,
-                    title: '테마 설정',
-                    subtitle: '애플리케이션 테마를 변경합니다',
+                    title: locale.settings_theme_title,
+                    subtitle: locale.settings_theme_subtitle,
                     onTap: () {
                       // 테마 설정 기능 구현 예정
                       print('테마 설정 클릭됨');
@@ -51,8 +51,8 @@ class SettingsPage extends ConsumerWidget {
                   const SizedBox(height: 16),
                   _buildSettingItem(
                     icon: FluentIcons.info,
-                    title: '앱 정보',
-                    subtitle: '애플리케이션 정보를 확인합니다',
+                    title: locale.settings_info_title,
+                    subtitle: locale.settings_info_subtitle,
                     onTap: () {
                       // 앱 정보 표시
                       print('앱 정보: ORDR DC Season 2 v1.0.0');

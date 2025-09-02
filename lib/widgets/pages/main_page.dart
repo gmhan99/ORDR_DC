@@ -20,6 +20,7 @@ class _MainPageState extends ConsumerState<MainPage> {
   @override
   Widget build(BuildContext context) {
     final selectedPage = ref.watch(selectedPageProvider);
+    final locale = AppLocalizations.of(context);
 
     return Layout(
       child: Column(
@@ -40,18 +41,15 @@ class _MainPageState extends ConsumerState<MainPage> {
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Row(
                 children: [
-                  // 좌측: 앱 로고
+                  // 좌측: 사이드바 토글 버튼 + 앱 로고
                   Row(
                     children: [
-                      Icon(
-                        FluentIcons.playlist_music,
-                        size: 24,
-                        color: Colors.blue,
-                      ),
+                      // 사이드바 토글 버튼
+                      _buildSidebarToggleButton(ref),
                       const SizedBox(width: 8),
-                      const Text(
-                        'ORDR DC',
-                        style: TextStyle(
+                      Text(
+                        locale.app_title,
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
@@ -64,7 +62,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                     children: [
                       _buildTopLinkButton(
                         icon: FluentIcons.link,
-                        label: '공식 사이트',
+                        label: locale.top_link_official_site,
                         onPressed: () {
                           // 공식 사이트 링크
                           print('공식 사이트 클릭됨');
@@ -73,7 +71,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                       const SizedBox(width: 16),
                       _buildTopLinkButton(
                         icon: FluentIcons.document,
-                        label: '가이드',
+                        label: locale.top_link_guide,
                         onPressed: () {
                           // 가이드 링크
                           print('가이드 클릭됨');
@@ -82,7 +80,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                       const SizedBox(width: 16),
                       _buildTopLinkButton(
                         icon: FluentIcons.people,
-                        label: '커뮤니티',
+                        label: locale.top_link_community,
                         onPressed: () {
                           // 커뮤니티 링크
                           print('커뮤니티 클릭됨');
@@ -92,7 +90,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                   ),
                   const Spacer(),
                   // 우측: 종료 버튼
-                  _buildExitButton(),
+                  _buildExitButton(locale),
                 ],
               ),
             ),
@@ -104,7 +102,7 @@ class _MainPageState extends ConsumerState<MainPage> {
               children: [
                 // ===== 좌측 사이드바 영역 =====
                 Container(
-                  width: 300,
+                  width: ref.watch(sidebarCollapsedProvider) ? 80 : 288,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border(
@@ -171,7 +169,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'ORDR DC Season 2에 오신 것을 환영합니다!',
+                    locale.welcome_title,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
@@ -179,7 +177,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    '좌측 메뉴에서 원하는 기능을 선택하여 사용하실 수 있습니다.',
+                    locale.welcome_description,
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
@@ -192,8 +190,8 @@ class _MainPageState extends ConsumerState<MainPage> {
                       Expanded(
                         child: _buildFeatureCard(
                           icon: FluentIcons.game,
-                          title: '규칙 룰렛',
-                          description: '게임 규칙을 랜덤하게 선택',
+                          title: locale.feature_rule_roulette_title,
+                          description: locale.feature_rule_roulette_description,
                           color: Colors.blue,
                         ),
                       ),
@@ -201,8 +199,8 @@ class _MainPageState extends ConsumerState<MainPage> {
                       Expanded(
                         child: _buildFeatureCard(
                           icon: FluentIcons.game,
-                          title: '기물 룰렛',
-                          description: '게임 기물을 랜덤하게 선택',
+                          title: locale.feature_unit_roulette_title,
+                          description: locale.feature_unit_roulette_description,
                           color: Colors.green,
                         ),
                       ),
@@ -210,8 +208,8 @@ class _MainPageState extends ConsumerState<MainPage> {
                       Expanded(
                         child: _buildFeatureCard(
                           icon: FluentIcons.settings,
-                          title: '설정',
-                          description: '애플리케이션 설정 관리',
+                          title: locale.feature_settings_title,
+                          description: locale.feature_settings_description,
                           color: Colors.orange,
                         ),
                       ),
@@ -298,9 +296,9 @@ class _MainPageState extends ConsumerState<MainPage> {
     );
   }
 
-  Widget _buildExitButton() {
+  Widget _buildExitButton(AppLocalizations locale) {
     return Button(
-      onPressed: () => _showExitDialog(),
+      onPressed: () => _showExitDialog(locale),
       style: ButtonStyle(
         backgroundColor: ButtonState.all(Colors.transparent),
         padding: ButtonState.all(const EdgeInsets.symmetric(horizontal: 12, vertical: 8)),
@@ -315,7 +313,7 @@ class _MainPageState extends ConsumerState<MainPage> {
           ),
           const SizedBox(width: 6),
           Text(
-            '종료',
+            locale.exit_button,
             style: TextStyle(
               fontSize: 14,
               color: Colors.red.withOpacity(0.8),
@@ -327,16 +325,16 @@ class _MainPageState extends ConsumerState<MainPage> {
     );
   }
 
-  void _showExitDialog() {
+  void _showExitDialog(AppLocalizations locale) {
     showDialog(
       context: context,
       builder: (context) => ContentDialog(
-        title: const Text('프로그램 종료'),
-        content: const Text('정말로 프로그램을 종료하시겠습니까?'),
+        title: Text(locale.exit_dialog_title),
+        content: Text(locale.exit_dialog_content),
         actions: [
           Button(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('취소'),
+            child: Text(locale.exit_dialog_cancel),
           ),
           Button(
             onPressed: () {
@@ -347,12 +345,36 @@ class _MainPageState extends ConsumerState<MainPage> {
             style: ButtonStyle(
               backgroundColor: ButtonState.all(Colors.red),
             ),
-            child: const Text(
-              '종료',
-              style: TextStyle(color: Colors.white),
+            child: Text(
+              locale.exit_dialog_confirm,
+              style: const TextStyle(color: Colors.white),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  // 사이드바 토글 버튼
+  Widget _buildSidebarToggleButton(WidgetRef ref) {
+    final isCollapsed = ref.watch(sidebarCollapsedProvider);
+    
+    return SizedBox(
+      width: 32,
+      height: 32,
+      child: Button(
+        onPressed: () {
+          ref.read(sidebarCollapsedProvider.notifier).state = !isCollapsed;
+        },
+        style: ButtonStyle(
+          backgroundColor: ButtonState.all(Colors.transparent),
+          padding: ButtonState.all(EdgeInsets.zero),
+        ),
+        child: Icon(
+          isCollapsed ? FluentIcons.chevron_right : FluentIcons.chevron_left,
+          size: 20,
+          color: Colors.blue,
+        ),
       ),
     );
   }

@@ -21,7 +21,7 @@ class RuleRoulettePage extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '규칙 룰렛',
+                    locale.rule_roulette_title,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
@@ -29,7 +29,7 @@ class RuleRoulettePage extends ConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    '게임 규칙을 랜덤하게 선택하는 룰렛입니다.',
+                    locale.rule_roulette_description,
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey.withOpacity(0.7),
@@ -41,7 +41,7 @@ class RuleRoulettePage extends ConsumerWidget {
                       // 룰렛 돌리기 기능 구현
                       print('규칙 룰렛 돌리기: 랜덤 규칙이 선택되었습니다!');
                     },
-                    child: const Text('룰렛 돌리기'),
+                    child: Text(locale.rule_roulette_button),
                   ),
                 ],
               ),
