@@ -49,16 +49,7 @@ class SideBar extends ConsumerWidget {
           isSelected: selectedPage == 'unit_roulette',
           isCollapsed: isCollapsed,
         ),
-        const SizedBox(height: 4),
-        _buildNavButton(
-          context: context,
-          ref: ref,
-          icon: FluentIcons.settings,
-          title: locale.side_button_settings,
-          pageId: 'settings',
-          isSelected: selectedPage == 'settings',
-          isCollapsed: isCollapsed,
-        ),
+
       ],
     );
   }
@@ -72,10 +63,13 @@ class SideBar extends ConsumerWidget {
     required bool isSelected,
     required bool isCollapsed,
   }) {
-    return SizedBox(
-      width: isCollapsed ? 50 : double.infinity,
-      height: 45,
-      child: Button(
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+      child: SizedBox(
+        width: isCollapsed ? 50 : double.infinity,
+        height: 45,
+        child: Button(
         onPressed: () {
           ref.read(selectedPageProvider.notifier).state = pageId;
         },
@@ -114,6 +108,9 @@ class SideBar extends ConsumerWidget {
           ),
         ),
       ),
+      ),
     );
   }
+
+
 }

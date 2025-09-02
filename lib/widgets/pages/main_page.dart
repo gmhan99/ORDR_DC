@@ -1,5 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ordr_dc/l10n/app_localizations.dart';
 import 'package:ordr_dc/widgets/layout.dart';
@@ -7,6 +8,7 @@ import 'package:ordr_dc/widgets/side_bar.dart';
 import 'package:ordr_dc/widgets/pages/rule_roulette_page.dart';
 import 'package:ordr_dc/widgets/pages/unit_roulette_page.dart';
 import 'package:ordr_dc/widgets/pages/settings_page.dart';
+import 'dart:io';
  
 
 class MainPage extends ConsumerStatefulWidget {
@@ -89,7 +91,9 @@ class _MainPageState extends ConsumerState<MainPage> {
                     ],
                   ),
                   const Spacer(),
-                  // 우측: 종료 버튼
+                  // 우측: 설정 버튼 + 종료 버튼
+                  _buildSettingsButton(locale),
+                  const SizedBox(width: 8),
                   _buildExitButton(locale),
                 ],
               ),
@@ -97,31 +101,42 @@ class _MainPageState extends ConsumerState<MainPage> {
           ),
           // ===== 하단 메인 영역 (좌측 사이드바 + 우측 콘텐츠) =====
           Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+            child: Container(
+              color: Colors.white,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                 // ===== 좌측 사이드바 영역 =====
-                Container(
-                  width: ref.watch(sidebarCollapsedProvider) ? 80 : 288,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border(
-                      right: BorderSide(
-                        color: Colors.grey.withOpacity(0.3),
-                        width: 1,
+                Consumer(
+                  builder: (context, ref, child) {
+                    final isCollapsed = ref.watch(sidebarCollapsedProvider);
+                    return AnimatedSize(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                      child: Container(
+                        width: isCollapsed ? 80 : 260,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border(
+                            right: BorderSide(
+                              color: Colors.grey.withOpacity(0.3),
+                              width: 1,
+                            ),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // 네비게이션 메뉴 버튼들
+                              const SideBar(),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // 네비게이션 메뉴 버튼들
-                        const SideBar(),
-                      ],
-                    ),
-                  ),
+                    );
+                  },
                 ),
                 // ===== 우측 메인 콘텐츠 영역 =====
                 Expanded(
@@ -131,6 +146,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                   ),
                 ),
               ],
+              ),
             ),
           ),
         ],
@@ -339,8 +355,8 @@ class _MainPageState extends ConsumerState<MainPage> {
           Button(
             onPressed: () {
               Navigator.of(context).pop();
-              // 프로그램 종료
-              SystemNavigator.pop();
+              // 프로그램 종료 (데스크톱 환경)
+              exit(0);
             },
             style: ButtonStyle(
               backgroundColor: ButtonState.all(Colors.red),
@@ -349,6 +365,105 @@ class _MainPageState extends ConsumerState<MainPage> {
               locale.exit_dialog_confirm,
               style: const TextStyle(color: Colors.white),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 설정 버튼
+  Widget _buildSettingsButton(AppLocalizations locale) {
+    return SizedBox(
+      width: 32,
+      height: 32,
+      child: Button(
+        onPressed: () {
+          _showSettingsDialog(locale);
+        },
+        style: ButtonStyle(
+          backgroundColor: ButtonState.all(Colors.transparent),
+          padding: ButtonState.all(EdgeInsets.zero),
+        ),
+        child: Icon(
+          FluentIcons.settings,
+          size: 20,
+          color: Colors.grey.withOpacity(0.7),
+        ),
+      ),
+    );
+  }
+
+  // 설정 다이얼로그 표시
+  void _showSettingsDialog(AppLocalizations locale) {
+    showDialog(
+      context: context,
+      builder: (context) => ContentDialog(
+        title: Text(locale.settings_title),
+        content: SizedBox(
+          width: 400,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 언어 설정
+              Text(
+                locale.settings_language_title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                locale.settings_language_subtitle,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.withOpacity(0.7),
+                ),
+              ),
+              const SizedBox(height: 16),
+              
+              // 테마 설정
+              Text(
+                locale.settings_theme_title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                locale.settings_theme_subtitle,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.withOpacity(0.7),
+                ),
+              ),
+              const SizedBox(height: 16),
+              
+              // 앱 정보
+              Text(
+                locale.settings_info_title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                locale.settings_info_subtitle,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.withOpacity(0.7),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          Button(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(locale.exit_dialog_cancel),
           ),
         ],
       ),
