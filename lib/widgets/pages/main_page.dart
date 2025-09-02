@@ -2,6 +2,9 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:bitsdojo_window/bitsdojo_window.dart' show appWindow;
+
 import 'package:ordr_dc/l10n/app_localizations.dart';
 import 'package:ordr_dc/widgets/layout.dart';
 import 'package:ordr_dc/widgets/side_bar.dart';
@@ -11,7 +14,6 @@ import 'package:ordr_dc/widgets/pages/settings_page.dart';
 import 'package:ordr_dc/config/urls.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
- 
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key});
@@ -29,66 +31,71 @@ class _MainPageState extends ConsumerState<MainPage> {
     return Layout(
       child: Column(
         children: [
-          // ===== 상단 헤더 바 영역 =====
-          Container(
-            height: 60,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey.withOpacity(0.3),
-                  width: 1,
+          // ===== 상단 헤더 바 영역 (드래그 가능) =====
+          GestureDetector(
+            onPanStart: (details) {
+              appWindow.startDragging();
+            },
+            child: Container(
+              height: 60,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey.withOpacity(0.3),
+                    width: 1,
+                  ),
                 ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Row(
-                children: [
-                  // 좌측: 사이드바 토글 버튼 + 앱 로고
-                  Row(
-                    children: [
-                      // 사이드바 토글 버튼
-                      _buildSidebarToggleButton(ref),
-                      const SizedBox(width: 8),
-                      Text(
-                        locale.app_title,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Row(
+                  children: [
+                    // 좌측: 사이드바 토글 버튼 + 앱 로고
+                    Row(
+                      children: [
+                        // 사이드바 토글 버튼
+                        _buildSidebarToggleButton(ref),
+                        const SizedBox(width: 8),
+                        Text(
+                          locale.app_title,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  // 중앙: 링크 버튼들
-                  Row(
-                    children: [
-                                             _buildTopLinkButton(
-                         icon: FluentIcons.link,
-                         label: locale.top_link_official_site,
-                         onPressed: () => _openUrl(AppUrls.officialSite),
-                       ),
-                       const SizedBox(width: 16),
-                       _buildTopLinkButton(
-                         icon: FluentIcons.document,
-                         label: locale.top_link_guide,
-                         onPressed: () => _openUrl(AppUrls.guide),
-                       ),
-                       const SizedBox(width: 16),
-                       _buildTopLinkButton(
-                         icon: FluentIcons.git_graph,
-                         label: locale.top_link_community,
-                         onPressed: () => _openUrl(AppUrls.community),
-                       ),
-                    ],
-                  ),
-                  const Spacer(),
-                  // 우측: 설정 버튼 + 종료 버튼
-                  _buildSettingsButton(locale),
-                  const SizedBox(width: 8),
-                  _buildExitButton(locale),
-                ],
+                      ],
+                    ),
+                    const Spacer(),
+                    // 중앙: 링크 버튼들
+                    Row(
+                      children: [
+                        _buildTopLinkButton(
+                          icon: FluentIcons.link,
+                          label: locale.top_link_official_site,
+                          onPressed: () => _openUrl(AppUrls.officialSite),
+                        ),
+                        const SizedBox(width: 16),
+                        _buildTopLinkButton(
+                          icon: FluentIcons.document,
+                          label: locale.top_link_guide,
+                          onPressed: () => _openUrl(AppUrls.guide),
+                        ),
+                        const SizedBox(width: 16),
+                        _buildTopLinkButton(
+                          icon: FluentIcons.git_graph,
+                          label: locale.top_link_community,
+                          onPressed: () => _openUrl(AppUrls.community),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    // 우측: 설정 버튼 + 종료 버튼
+                    _buildSettingsButton(locale),
+                    const SizedBox(width: 8),
+                    _buildExitButton(locale),
+                  ],
+                ),
               ),
             ),
           ),
@@ -99,46 +106,46 @@ class _MainPageState extends ConsumerState<MainPage> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                // ===== 좌측 사이드바 영역 =====
-                Consumer(
-                  builder: (context, ref, child) {
-                    final isCollapsed = ref.watch(sidebarCollapsedProvider);
-                    return AnimatedSize(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      child: Container(
-                        width: isCollapsed ? 80 : 260,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border(
-                            right: BorderSide(
-                              color: Colors.grey.withOpacity(0.3),
-                              width: 1,
+                  // ===== 좌측 사이드바 영역 =====
+                  Consumer(
+                    builder: (context, ref, child) {
+                      final isCollapsed = ref.watch(sidebarCollapsedProvider);
+                      return AnimatedSize(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                        child: Container(
+                          width: isCollapsed ? 80 : 260,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border(
+                              right: BorderSide(
+                                color: Colors.grey.withOpacity(0.3),
+                                width: 1,
+                              ),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // 네비게이션 메뉴 버튼들
+                                const SideBar(),
+                              ],
                             ),
                           ),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // 네비게이션 메뉴 버튼들
-                              const SideBar(),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                // ===== 우측 메인 콘텐츠 영역 =====
-                Expanded(
-                  child: Container(
-                    color: Colors.white,
-                    child: _buildPageContent(selectedPage),
+                      );
+                    },
                   ),
-                ),
-              ],
+                  // ===== 우측 메인 콘텐츠 영역 =====
+                  Expanded(
+                    child: Container(
+                      color: Colors.white,
+                      child: _buildPageContent(selectedPage),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

@@ -1,12 +1,29 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:window_manager/window_manager.dart';
 import 'l10n/app_localizations.dart';
 import 'package:ordr_dc/widgets/pages/main_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // bitsdojo_window 초기화
+  doWhenWindowReady(() {
+    const initialSize = Size(1200, 800);
+    appWindow.minSize = initialSize;
+    appWindow.size = initialSize;
+    appWindow.alignment = Alignment.center;
+    appWindow.show();
+  });
+
+  // window_manager로 타이틀 바 숨기기
+  await windowManager.ensureInitialized();
+  await windowManager.setTitleBarStyle(TitleBarStyle.hidden);
+
   runApp(
     const ProviderScope(
       child: MyApp(),
@@ -24,6 +41,7 @@ class MyApp extends StatelessWidget {
       title: 'ordr_dc',
       debugShowCheckedModeBanner: false, // Debug Banner 제거
       locale: const Locale('ko', ''), // 기본 로케일을 한국어로 설정
+
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
